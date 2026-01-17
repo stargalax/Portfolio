@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nikitha’s Space</title>
+    <link rel="icon"
+        href="http://www.avatarsinpixels.com/minipix/eyJIYWlyTG93ZXIiOiIxIiwiQm9keSI6IjEiLCJNb3V0aCI6IjciLCJTaG9lcyI6IjEiLCJQYW50cyI6IjEiLCJUb3AiOiIxMyIsIkhhaXIiOiI0IiwiZXllc1RvbmUiOiI0NDQ0NDQiLCJleWVzVG9uZTIiOiIwMDAwMDAifQ==/1/show.png"
+        type="image/png">
+
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .header-logo {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 100;
+            pointer-events: none;
+            /* Allows clicks to pass through to shapes if needed */
+        }
+
+        .mail-icon {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: transform 0.2s;
+            z-index: 100;
+            /* So it stays above shapes */
+        }
+
+        .mail-icon img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .mail-icon:hover {
+            transform: scale(1.1);
+        }
+
+
+
+        .avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        }
+
+        .site-title {
+            color: white;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* VIDEO BG */
+        #bgVideo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+
+        /* OVERLAY */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(2px);
+            z-index: -1;
+        }
+
+        /* CONTAINER FOR BUTTONS */
+        .container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .typewriter-footer {
+            position: absolute;
+            /* Stick at the bottom of the container */
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 10px 20px;
+            /* Some space from edges */
+            background: rgba(0, 0, 0, 0.3);
+            /* subtle background to be readable */
+            box-sizing: border-box;
+        }
+
+        .typewriter-footer h1 {
+            color: #fff;
+            font-family: monospace;
+            overflow: hidden;
+            /* Hide text until typed */
+            border-right: .15em solid orange;
+            /* Typewriter cursor */
+            white-space: nowrap;
+            /* Single line */
+            margin: 0;
+            letter-spacing: .15em;
+            animation:
+                typing 3.5s steps(60, end),
+                blink-caret .5s step-end infinite;
+        }
+
+        /* Typing animation */
+        @keyframes typing {
+            from {
+                width: 0
+            }
+
+            to {
+                width: 100%
+            }
+        }
+
+        /* Blinking cursor */
+        @keyframes blink-caret {
+
+            from,
+            to {
+                border-color: transparent
+            }
+
+            50% {
+                border-color: orange
+            }
+        }
+
+
+        /* SHAPES */
+        .shape {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 16px;
+            font-weight: 600;
+            font-size: 14px;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            user-select: none;
+            line-height: 1.2;
+            will-change: transform;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+            transition: scale 0.2s;
+        }
+
+        .shape:hover {
+            scale: 1.05;
+        }
+
+        /* SHAPE TYPES */
+        .circle {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+        }
+
+        .square {
+            width: 150px;
+            height: 150px;
+            border-radius: 22px;
+        }
+
+        /* COLORS */
+        #lifetime {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        #echofeel {
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+        }
+
+        #kanji {
+            background: linear-gradient(135deg, #43cea2, #185a9d);
+        }
+
+        #scrapecraft {
+            background: linear-gradient(135deg, #f7971e, #ffd200);
+            color: #000;
+        }
+
+        #bharatva {
+            background: linear-gradient(135deg, #ff512f, #dd2476);
+        }
+
+        #linkedin {
+            background: #0a66c2;
+        }
+
+        #github {
+            background: #24292e;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header-logo">
+        <img src="http://www.avatarsinpixels.com/minipix/eyJIYWlyTG93ZXIiOiIxIiwiQm9keSI6IjEiLCJNb3V0aCI6IjciLCJTaG9lcyI6IjEiLCJQYW50cyI6IjEiLCJUb3AiOiIxMyIsIkhhaXIiOiI0IiwiZXllc1RvbmUiOiI0NDQ0NDQiLCJleWVzVG9uZTIiOiIwMDAwMDAifQ==/1/show.png"
+            alt="Nikitha Avatar" class="avatar">
+        <h1 class="site-title">Nikitha's Space</h1>
+    </div>
+    <a href="mailto: nikitha.s.2022.cse@ritchennai.edu.in" class="mail-icon">
+        <img src="C:\Users\hakre\Downloads\mail.png" alt="Mail">
+    </a>
+
+    <video autoplay muted loop playsinline id="bgVideo">
+        <source src="C:\Users\hakre\Downloads\bg.mp4" type="video/mp4">
+        Your browser does not support HTML5 video.
+    </video>
+
+    <div class="overlay"></div>
+
+    <div class="container">
+        <a class="shape square" id="lifetime" href="https://customer-life-cycle-value-frontend.vercel.app/"
+            target="_blank">
+            LIFETIME<br />Customer Value Intelligence
+        </a>
+        <a class="shape circle" id="echofeel" href="https://sentiment-analysis-of-voice-input.streamlit.app/"
+            target="_blank">
+            ECHOFEEL<br />Voice Sentiment AI
+        </a>
+
+        <a class="shape square" id="kanji" href="https://huggingface.co/spaces/nikisded/japanese-using-opencv"
+            target="_blank">
+            KANJI VISION<br />Handwriting AI
+        </a>
+        <a class="shape circle" id="scrapecraft" href="https://webscrapp-lcfhxdvwcvadycsp9ff9fy.streamlit.app/"
+            target="_blank">
+            SCRAPECRAFT<br />Web Intelligence
+        </a>
+        <a class="shape square" id="bharatva" href="https://tourismdatadashboard.streamlit.app/" target="_blank">
+            BHARATVA<br />Heritage Data Atlas
+        </a>
+
+        <a class="shape circle" id="linkedin" href="https://www.linkedin.com/in/nikitha-s-564567261/" target="_blank">
+            LinkedIn
+        </a>
+        <a class="shape circle" id="github" href="https://github.com/stargalax" target="_blank">
+            GitHub
+        </a>
+    </div>
+
+    <script>
+        const shapes = document.querySelectorAll('.shape');
+        const mouse = { x: -9999, y: -9999 };
+
+        window.addEventListener('mousemove', e => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        const items = [];
+        const spacingX = 190;
+        const spacingY = 190;
+        const cols = 3;
+
+        /* POSITIONING LOGIC */
+        shapes.forEach((el, i) => {
+            let col = i % cols;
+            let row = Math.floor(i / cols);
+
+            // SPECIAL CASE: Align GitHub to Row 3, Column 2 (index col=1, row=2)
+            if (el.id === 'github') {
+                col = 1;
+                row = 2;
+            }
+
+            const targetX = window.innerWidth / 2 - (cols - 1) * spacingX / 2 + col * spacingX;
+            const targetY = window.innerHeight / 2 - spacingY + row * spacingY;
+
+            items.push({
+                el,
+                x: targetX,
+                y: -300 - Math.random() * 400,
+                vx: 0,
+                vy: 0,
+                targetX,
+                targetY,
+                mass: 0.7 + Math.random() * 0.4,
+                landed: false
+            });
+        });
+
+        /* PHYSICS CONSTANTS */
+        const GRAVITY = 0.35;
+        const TERMINAL_VELOCITY = 6;
+        const LAND_SOFTNESS = 0.35;
+        const SPRING = 0.02;
+        const FRICTION = 0.88;
+        const COLLISION_DIST = 150;
+        const MOUSE_RADIUS = 160;
+
+        let entryPhase = true;
+
+        function animate() {
+            items.forEach((a, i) => {
+
+                /* ENTRY FALL ANIMATION */
+                if (entryPhase) {
+                    a.vy += GRAVITY * a.mass;
+                    a.vy = Math.min(a.vy, TERMINAL_VELOCITY);
+                    a.y += a.vy;
+
+                    if (a.y >= a.targetY - 18) {
+                        a.y = a.targetY - 18;
+                        a.vy *= -LAND_SOFTNESS;
+
+                        if (Math.abs(a.vy) < 0.4) {
+                            a.vy = 0;
+                            a.landed = true;
+                        }
+                    }
+                }
+
+                if (entryPhase && items.every(item => item.landed)) {
+                    entryPhase = false;
+                }
+
+                /* INTERACTIVE PHYSICS */
+                if (!entryPhase) {
+                    a.vx += (a.targetX - a.x) * SPRING;
+                    a.vy += (a.targetY - a.y) * SPRING;
+
+                    const dx = a.x - mouse.x;
+                    const dy = a.y - mouse.y;
+                    const dist = Math.hypot(dx, dy) || 1;
+
+                    if (dist < MOUSE_RADIUS) {
+                        const force = (MOUSE_RADIUS - dist) / MOUSE_RADIUS;
+                        a.vx += (dx / dist) * force * 3;
+                        a.vy += (dy / dist) * force * 3;
+                    }
+
+                    // Collision detection between shapes
+                    items.forEach((b, j) => {
+                        if (i === j) return;
+                        const dx = a.x - b.x;
+                        const dy = a.y - b.y;
+                        const d = Math.hypot(dx, dy) || 1;
+                        if (d < COLLISION_DIST) {
+                            const push = (COLLISION_DIST - d) * 0.015;
+                            a.vx += (dx / d) * push;
+                            a.vy += (dy / d) * push;
+                        }
+                    });
+
+                    a.vx *= FRICTION;
+                    a.vy *= FRICTION;
+                    a.x += a.vx;
+                    a.y += a.vy;
+                }
+
+                a.el.style.transform = `translate(${a.x}px, ${a.y}px)`;
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        // Responsive adjustment on resize
+        window.addEventListener('resize', () => {
+            items.forEach((a, i) => {
+                let col = i % cols;
+                let row = Math.floor(i / cols);
+                if (a.el.id === 'github') { col = 1; row = 2; }
+
+                a.targetX = window.innerWidth / 2 - (cols - 1) * spacingX / 2 + col * spacingX;
+                a.targetY = window.innerHeight / 2 - spacingY + row * spacingY;
+            });
+        });
+    </script>
+    <footer class="typewriter-footer">
+        <h1>Top 5 projects that show my generalist understanding of tech</h1>
+    </footer>
+
+</body>
+
+</html>
